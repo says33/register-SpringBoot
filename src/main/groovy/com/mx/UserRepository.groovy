@@ -3,5 +3,5 @@
 import org.springframework.data.repository.PagingAndSortingRepository
 import org.springframework.data.repository.CrudRepository
 
-interface UserRepository extends PagingAndSortingRepository<User,Long>, CrudRepository<User, Long> {
+interface UserRepository extends PagingAndSortingRepository<User,Long> {
 }
