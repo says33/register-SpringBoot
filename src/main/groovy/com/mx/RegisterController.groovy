@@ -11,6 +11,9 @@ import org.springframework.stereotype.Controller
 @Controller
 class RegisterController {
 
+  @Autowired
+  UserRepository repository
+
   @RequestMapping(value="/form", method=RequestMethod.GET)
   String index(Model model) {
     model.addAttribute("user", new User())
@@ -19,7 +22,8 @@ class RegisterController {
 
   @RequestMapping(value="/User", method=RequestMethod.POST)
   String userSubmit(@ModelAttribute User user, Model model) {
-  	model.addAttribute("user", user)
+  	repository.save(user)
+    model.addAttribute("user", user)
   	"registration/result"
   }
 
