@@ -1,12 +1,12 @@
 package com.mx.service
 
-import com.mx.domain
+import com.mx.domain.*
 
 public interface UserService {
 
     Collection<User> getUserById(long id);
 
-    Optional<User> getUserByEmail(String username);
+    Collection<User> getUserByUsername(String username);
 
     Collection<User> getAllUsers();
 
