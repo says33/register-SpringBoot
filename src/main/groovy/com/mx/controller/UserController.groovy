@@ -13,11 +13,14 @@ import org.springframework.validation.BindingResult
 import org.springframework.web.bind.WebDataBinder
 import org.springframework.web.bind.annotation.*
 import org.springframework.security.access.prepost.PreAuthorize
-import com.mx.domain.*
+import com.mx.domain.UserCommand
+import com.mx.domain.UserRepository
 import com.mx.domain.validator.UserCreateFormValidator
 import com.mx.service.UserService
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import javax.validation.Valid;
+import java.util.NoSuchElementException;
 
 @Controller
 class UserController {
@@ -31,6 +34,11 @@ class UserController {
 
   Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
+  @InitBinder("form")
+  void initBinder(WebDataBinder binder) {
+    binder.addValidators(userCreateFormValidator);
+  }
+
   @RequestMapping(value="/form", method=RequestMethod.GET)
   String index(Model model) {
     LOGGER.debug("index")
@@ -39,10 +47,12 @@ class UserController {
   }
   
   @RequestMapping(value="/User", method=RequestMethod.POST)
-  String userSubmit(@ModelAttribute UserCommand user, Model model) {
+  String userSubmit(@Valid @ModelAttribute("form") UserCommand form, BindingResult bindingResult) {
+    if (bindingResult.hasErrors()) {
+      "user/index"
+    }
     userService.create(user)
-    model.addAttribute("user", user)
-  	"user/result"
+    "redirect:/Users"
   }
 
   @PreAuthorize("hasAuthority('USER')")
