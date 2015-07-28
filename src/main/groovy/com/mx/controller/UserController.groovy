@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.ui.Model
 import org.springframework.web.servlet.ModelAndView
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.stereotype.Controller
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.security.access.prepost.PreAuthorize
 import com.mx.domain.UserCommand
 import com.mx.domain.UserRepository
+import com.mx.domain.User
 import com.mx.domain.validator.UserCreateFormValidator
 import com.mx.service.UserService
 import org.slf4j.Logger;
@@ -49,16 +50,16 @@ class UserController {
   @RequestMapping(value="/User", method=RequestMethod.POST)
   String userSubmit(@Valid @ModelAttribute("form") UserCommand form, BindingResult bindingResult) {
     if (bindingResult.hasErrors()) {
-      "user/index"
+      return "user/index"
     }
-    userService.create(user)
-    "redirect:/Users"
+    userService.create(form)
+    "user/show"
   }
 
   @PreAuthorize("hasAuthority('USER')")
-  @RequestMapping(value="/Users", method=RequestMethod.GET)
+  @RequestMapping(value="/All", method=RequestMethod.GET)
   ModelAndView getAllUser() {
-    new ModelAndView("show","users",repository.findAll())
+    new ModelAndView("user/show","users",repository.findAll())
   }
 
 }
