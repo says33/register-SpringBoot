@@ -1,8 +1,9 @@
  package com.mx.domain
 
 import org.springframework.data.repository.PagingAndSortingRepository
+import java.util.Optional
 
 interface UserRepository extends PagingAndSortingRepository<User,Long> {
 
-	User findByUsername(String username)
+	Optional<User> findByUsername(String username)
 }
