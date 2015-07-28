@@ -12,7 +12,4 @@ public class AppWebApplication extends SpringBootServletInitializer{
         SpringApplication.run(AppWebApplication.class, args);
     }
 
-    SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-      application.source(AppWebApplication.class)
-    }
 }
