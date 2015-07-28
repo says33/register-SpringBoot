@@ -24,6 +24,7 @@ import javax.validation.Valid;
 import java.util.NoSuchElementException;
 
 @Controller
+@RequestMapping("/Users")
 class UserController {
 
   @Autowired
@@ -40,26 +41,36 @@ class UserController {
     binder.addValidators(userCreateFormValidator);
   }
 
-  @RequestMapping(value="/form", method=RequestMethod.GET)
-  String index(Model model) {
-    LOGGER.debug("index")
+  @PreAuthorize("hasAuthority('USER')")
+  @RequestMapping(value="/create", method=RequestMethod.GET)
+  String form(Model model) {
+    LOGGER.info("render view Form for userController")
     model.addAttribute("user", new UserCommand())
-    "user/index"
+    "user/form"
   }
   
-  @RequestMapping(value="/User", method=RequestMethod.POST)
-  String userSubmit(@Valid @ModelAttribute("form") UserCommand form, BindingResult bindingResult) {
+  @PreAuthorize("hasAuthority('USER')")
+  @RequestMapping(value="/save", method=RequestMethod.POST)
+  ModelAndView save(@Valid @ModelAttribute("form") UserCommand form, BindingResult bindingResult) {
+    LOGGER.info "begin save of new user"
     if (bindingResult.hasErrors()) {
-      return "user/index"
+      LOGGER.info "the method save in userController had a problem in validate form"
+      new ModelAndView("user/create","error", form)
     }
-    userService.create(form)
-    "user/show"
+    User user = userService.create(form)
+    new ModelAndView("user/result", "user", user)
   }
 
   @PreAuthorize("hasAuthority('USER')")
-  @RequestMapping(value="/All", method=RequestMethod.GET)
-  ModelAndView getAllUser() {
+  @RequestMapping(value="/", method=RequestMethod.GET)
+  ModelAndView index() {
     new ModelAndView("user/show","users",repository.findAll())
+  }
+
+  @PreAuthorize("hasAuthority('USER')")
+  @RequestMapping(value="/show", method=RequestMethod.GET)
+  ModelAndView show(Long userId) {
+    new ModelAndView("/user/result","user", repository.findById(userId))
   }
 
 }
