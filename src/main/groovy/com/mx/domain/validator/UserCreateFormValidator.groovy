@@ -36,8 +36,8 @@ class UserCreateFormValidator implements Validator {
   }
 
   //@Override
-  void validateEmail(Errors error, UserCommand command) {
-    if (userService.getUserByUsername(command.username).isPresent())
+  void validateEmail(Errors errors, UserCommand command) {
+    if (userService.getUserByUsername(command.username) != null)
       errors.reject("email.exists", "User with this email already exists")
   }
 
