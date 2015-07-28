@@ -8,7 +8,7 @@ class HomeController {
 
     @RequestMapping("/")
     String getHomePage() {
-      return "login/index"
+      return "home/index"
     }
 
 }
