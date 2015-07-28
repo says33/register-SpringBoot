@@ -1,14 +1,16 @@
 package com.mx.service
 
 import com.mx.domain.*
+import java.util.Optional
+
 
 public interface UserService {
 
-    Collection<User> getUserById(long id)
+    Optional<User> getUserById(long id)
 
-		User getUserByUsername(String username)
+	Optional<User> getUserByUsername(String username)
 
-    Collection<User> getAllUsers()
+    Optional<User> getAllUsers()
 
     User create(UserCommand command)
 
