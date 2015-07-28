@@ -4,12 +4,12 @@ import com.mx.domain.*
 
 public interface UserService {
 
-    Collection<User> getUserById(long id);
+    Collection<User> getUserById(long id)
 
-    Collection<User> getUserByUsername(String username);
+		User getUserByUsername(String username)
 
-    Collection<User> getAllUsers();
+    Collection<User> getAllUsers()
 
-    User create(UserCommand command);
+    User create(UserCommand command)
 
 }
