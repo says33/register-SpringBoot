@@ -16,9 +16,8 @@ class UserServiceImpl implements UserService {
       userRepository.findOne(id)
     }
 
-    @Override
-    Collection<User> getUserByUsername(String username) {
-      userRepository.findOneByUsername(username);
+    User getUserByUsername(String username) {
+      userRepository.findByUsername(username)
     }
 
     @Override
