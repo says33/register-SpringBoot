@@ -10,17 +10,15 @@ import org.springframework.stereotype.Service
 
 @Service
 class CurrentUserDetailService implements UserDetailsService {
-  private final UserService userService
-
+  
   @Autowired
-  CurrentUserDetailService(UserService userService) {
-    this.userService = userService
-  }
+  UserService userService
 
   @Override
   CurrentUser loadUserByUsername(String username) throws UsernameNotFoundException {
-    User user = userService.getUserByUsername(username).orElseThrow{ ->
-      new UsernameNotFoundException(String.format("User with email=%s was not found", user))
+    User user = userService.getUserByUsername(username)
+    if (user == null){ 
+      new UsernameNotFoundException(String.format("User with username=%s was not found", username))
     }
     new CurrentUser(user)
   }
