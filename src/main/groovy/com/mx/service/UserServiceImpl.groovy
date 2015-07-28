@@ -2,8 +2,9 @@ package com.mx.service
 
 import com.mx.domain.*
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import java.util.Optional
+import org.springframework.stereotype.Service
 
 @Service
 class UserServiceImpl implements UserService {
@@ -12,16 +13,16 @@ class UserServiceImpl implements UserService {
     UserRepository userRepository
 
     @Override
-    Collection<User> getUserById(long id) {
+    Optional<User> getUserById(long id) {
       userRepository.findOne(id)
     }
 
-    User getUserByUsername(String username) {
+    Optional<User> getUserByUsername(String username) {
       userRepository.findByUsername(username)
     }
 
     @Override
-    Collection<User> getAllUsers() {
+    Optional<User> getAllUsers() {
       userRepository.findAll()
     }
 
