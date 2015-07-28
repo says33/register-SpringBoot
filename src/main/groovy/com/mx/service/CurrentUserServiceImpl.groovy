@@ -8,7 +8,7 @@ class CurrentUserServiceImpl implements CurrentUserService {
   
   @Override
   boolean canAccessUser(CurrentUser currentUser, Long userId){
-    currentUser != null && (currentUser.role == Role.ADMIN || currentUser.id.equals(userId))
+    !currentUser && (currentUser.role == Role.ADMIN || currentUser.id.equals(userId))
   }
 
 }
