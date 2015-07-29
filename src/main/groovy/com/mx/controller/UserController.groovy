@@ -68,8 +68,9 @@ class UserController {
   }
 
   @PreAuthorize("hasAuthority('USER')")
-  @RequestMapping(value="/show", method=RequestMethod.GET)
-  ModelAndView show(Long userId) {
+  @RequestMapping(value="/{userId}", method=RequestMethod.GET)
+  ModelAndView show(@PathVariable Long userId) {
+    LOGGER.info "Method  show with id ${userId} "
     new ModelAndView("/user/result","user", repository.findById(userId))
   }
 
